@@ -1,17 +1,45 @@
-name: SimpleSQL CI
-
-on: [push]
-
+name: Tests
+on: [push, pull_request]
 jobs:
 
   run-test:
     runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 12.x
           registry-url: https://registry.npmjs.org/
       - run: npm install
       - run: npm test
+
+
+name: Deploy
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+
+  publish:
+    requires: [run-test]
+    builds-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: https://registry.npmjs.org/
+      - run: npm install
+      - run: npm publish --access=public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: https://npm.pkg.github.com/
+          scope: '@redbeardlab'
+      - run: npm publish --access=public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
