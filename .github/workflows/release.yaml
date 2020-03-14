@@ -8,7 +8,6 @@ on:
 jobs:
 
   publish:
-    requires: [run-test]
     builds-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
