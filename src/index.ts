@@ -7,28 +7,47 @@ export const apiUrl = `${baseUrl}/v0/api`;
 class Auth {
     Authentication?: string;
     constructor(token?: string) {
-        this.Authentication = token;
-    } 
+	this.Authentication = `Bearer ${token}`;
+   }
+}
+
+function generateAuth(token?: string): Object {
+    if (token) {
+	return {'Authorization': `Bearer ${token}`};
+    }
+    return {};
 }
 
 export async function newDatabase(token?: string): Promise<string> {
-    let auth = new Auth(token);
-    const response = await axios.post(`${apiUrl}/database`, {
-        headers: auth, 
-    });
+    let auth = generateAuth(token);
+    const response = await axios.post(`${apiUrl}/database`, 
+	{}, // empty data
+	{ headers: auth });
     return response['data']['database'];
 }
 
 export async function execute(database: string, command: string, token?: string): Promise<Object> {
-    var auth;
-    if (token) {
-        auth = new Auth(token);
-    } else {
-        auth = {};
-    }
+    const auth = generateAuth(token);
     const response = await axios.post(`${apiUrl}/command/${database}`, 
         { "command": command },
         { headers: auth });
     return response['data']['result'];
 }
 
+export async function listDatabases(token: string): Promise<[string]> {
+    const auth = generateAuth(token);
+    const response = await axios.get(`${apiUrl}/databases`, { headers: auth });
+    return response['data'];
+}
+
+export async function newToken(token: string): Promise<string> {
+    const auth = generateAuth(token);
+    const response = await axios.post(`${apiUrl}/token`, { headers: auth });
+    return response['data']['token'];
+}
+
+export async function listTokens(token: string): Promise<[string]> {
+    const auth = generateAuth(token);
+    const response = await axios.get(`${apiUrl}/tokens`, { headers: auth });
+    return response['data'];
+}

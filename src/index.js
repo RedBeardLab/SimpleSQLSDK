@@ -41,20 +41,25 @@ var axios = require('axios').default;
 exports.apiUrl = exports.baseUrl + "/v0/api";
 var Auth = /** @class */ (function () {
     function Auth(token) {
-        this.Authentication = token;
+        this.Authentication = "Bearer " + token;
     }
     return Auth;
 }());
+function generateAuth(token) {
+    if (token) {
+        return { 'Authorization': "Bearer " + token };
+    }
+    return {};
+}
 function newDatabase(token) {
     return __awaiter(this, void 0, void 0, function () {
         var auth, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    auth = new Auth(token);
-                    return [4 /*yield*/, axios.post(exports.apiUrl + "/database", {
-                            headers: auth,
-                        })];
+                    auth = generateAuth(token);
+                    return [4 /*yield*/, axios.post(exports.apiUrl + "/database", {}, // empty data
+                        { headers: auth })];
                 case 1:
                     response = _a.sent();
                     return [2 /*return*/, response['data']['database']];
@@ -69,12 +74,7 @@ function execute(database, command, token) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (token) {
-                        auth = new Auth(token);
-                    }
-                    else {
-                        auth = {};
-                    }
+                    auth = generateAuth(token);
                     return [4 /*yield*/, axios.post(exports.apiUrl + "/command/" + database, { "command": command }, { headers: auth })];
                 case 1:
                     response = _a.sent();
@@ -84,3 +84,51 @@ function execute(database, command, token) {
     });
 }
 exports.execute = execute;
+function listDatabases(token) {
+    return __awaiter(this, void 0, void 0, function () {
+        var auth, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    auth = generateAuth(token);
+                    return [4 /*yield*/, axios.get(exports.apiUrl + "/databases", { headers: auth })];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response['data']];
+            }
+        });
+    });
+}
+exports.listDatabases = listDatabases;
+function newToken(token) {
+    return __awaiter(this, void 0, void 0, function () {
+        var auth, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    auth = generateAuth(token);
+                    return [4 /*yield*/, axios.post(exports.apiUrl + "/token", { headers: auth })];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response['data']['token']];
+            }
+        });
+    });
+}
+exports.newToken = newToken;
+function listTokens(token) {
+    return __awaiter(this, void 0, void 0, function () {
+        var auth, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    auth = generateAuth(token);
+                    return [4 /*yield*/, axios.get(exports.apiUrl + "/tokens", { headers: auth })];
+                case 1:
+                    response = _a.sent();
+                    return [2 /*return*/, response['data']];
+            }
+        });
+    });
+}
+exports.listTokens = listTokens;

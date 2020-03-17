@@ -7,6 +7,7 @@
     "test": "test"
   },
   "dependencies": {
+    "@types/node": "^13.9.1",
     "axios": "^0.19.2"
   },
   "devDependencies": {
