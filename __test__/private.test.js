@@ -1,5 +1,5 @@
 
-const SimpleSQL = require('../src/index.js');
+const SimpleSQL = require('../dist/simplesql.js');
 
 const token = "test_token";
 

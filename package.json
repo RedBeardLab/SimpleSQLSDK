@@ -11,10 +11,15 @@
     "axios": "^0.19.2"
   },
   "devDependencies": {
-    "jest": "^25.1.0"
+    "jest": "^25.1.0",
+    "typescript": "^3.8.3",
+    "uglify-js": "^3.8.0"
   },
   "scripts": {
-    "test": "jest --env=node"
+    "test": "jest --env=node",
+    "compile": "tsc",
+    "minify": "uglifyjs dist/simplesql.js --output dist/simplesql.min.js",
+    "build": "npm run compile && npm run minify"
   },
   "author": "",
   "license": "ISC"
