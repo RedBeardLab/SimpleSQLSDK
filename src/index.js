@@ -68,7 +68,7 @@ function newDatabase(token) {
     });
 }
 exports.newDatabase = newDatabase;
-function execute(database, command, token) {
+function command(database, command, token) {
     return __awaiter(this, void 0, void 0, function () {
         var auth, response;
         return __generator(this, function (_a) {
@@ -83,7 +83,7 @@ function execute(database, command, token) {
         });
     });
 }
-exports.execute = execute;
+exports.command = command;
 function listDatabases(token) {
     return __awaiter(this, void 0, void 0, function () {
         var auth, response;
@@ -107,7 +107,7 @@ function newToken(token) {
             switch (_a.label) {
                 case 0:
                     auth = generateAuth(token);
-                    return [4 /*yield*/, axios.post(exports.apiUrl + "/token", { headers: auth })];
+                    return [4 /*yield*/, axios.post(exports.apiUrl + "/token", {}, { headers: auth })];
                 case 1:
                     response = _a.sent();
                     return [2 /*return*/, response['data']['token']];

@@ -26,7 +26,7 @@ export async function newDatabase(token?: string): Promise<string> {
     return response['data']['database'];
 }
 
-export async function execute(database: string, command: string, token?: string): Promise<Object> {
+export async function command(database: string, command: string, token?: string): Promise<Object> {
     const auth = generateAuth(token);
     const response = await axios.post(`${apiUrl}/command/${database}`, 
         { "command": command },
@@ -42,7 +42,7 @@ export async function listDatabases(token: string): Promise<[string]> {
 
 export async function newToken(token: string): Promise<string> {
     const auth = generateAuth(token);
-    const response = await axios.post(`${apiUrl}/token`, { headers: auth });
+    const response = await axios.post(`${apiUrl}/token`, {}, { headers: auth });
     return response['data']['token'];
 }
 

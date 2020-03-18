@@ -15,7 +15,7 @@ describe('Run SQL against a database', function() {
   });
 
   test('we can query static values', async function() {
-    let one_result = await SimpleSQL.execute(db, "SELECT 1;");
+    let one_result = await SimpleSQL.command(db, "SELECT 1;");
     expect(one_result.message).toBe('RESULT');
     expect(one_result.columns_type.length).toBe(1);
     expect(one_result.columns_type[0]).toBe('INT');
@@ -27,26 +27,26 @@ describe('Run SQL against a database', function() {
   });
 
   test('we can create table', async () => {
-    let create_table = await SimpleSQL.execute(db, "CREATE TABLE foo(a int, b int);");
+    let create_table = await SimpleSQL.command(db, "CREATE TABLE foo(a int, b int);");
     expect(create_table.message).toBe('DONE');
     expect(create_table.modified_rows).toBe(0);
   });
 
   test('we can insert into table', async () => {
-    await SimpleSQL.execute(db, "CREATE TABLE bar(a int, b string);")
-    let insert = await SimpleSQL.execute(db, "INSERT INTO bar VALUES(1, 'AAA'),(2,'BBB');")
+    await SimpleSQL.command(db, "CREATE TABLE bar(a int, b string);")
+    let insert = await SimpleSQL.command(db, "INSERT INTO bar VALUES(1, 'AAA'),(2,'BBB');")
     expect(insert.message).toBe('DONE');
     expect(insert.modified_rows).toBe(2);
   });
 
   test("we can insert in multiple table with a single transaction", async () => {
-    let insert = await SimpleSQL.execute(db, "BEGIN; INSERT INTO foo VALUES(1,2),(2,3); INSERT INTO bar VALUES(3, 'CCC'); COMMIT;")
+    let insert = await SimpleSQL.command(db, "BEGIN; INSERT INTO foo VALUES(1,2),(2,3); INSERT INTO bar VALUES(3, 'CCC'); COMMIT;")
     expect(insert.message).toBe('DONE');
     expect(insert.modified_rows).toBe(3);
   });
 
   test('query all the values', async () => {
-    let query = await SimpleSQL.execute(db, "SELECT * FROM bar ORDER BY a;");
+    let query = await SimpleSQL.command(db, "SELECT * FROM bar ORDER BY a;");
     expect(query.message).toBe('RESULT');
     expect(query.columns_type.length).toBe(2);
     expect(query.columns_type[0]).toBe('INT');
