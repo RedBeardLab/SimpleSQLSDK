@@ -11,6 +11,10 @@ Don't worry it is free!
 
 User without authentication can create and work only with public databases, for private databases is necessary to register and then the user will have access to authentication tokens.
 
+## Subscribe to the mail list
+
+SimpleSQL is a growing project, you can [subscribe to updates here.][subscribe]
+
 ## The SDK
 
 This package provide a Javascript SDK that allow to write severless application that can comunicate with a database directly from the browser. The same SDK can be used to develop nodejs application.
@@ -83,6 +87,17 @@ let tokens = await SimpleSQL.listTokens('your_token_here');
 `SimpleSQL.listTokens(token)` returns a list of all the token associate with the account.
 Each token can be used to create private databases, query private databases or create new tokens.
 
+## Contributing
+
+The biggest contribution is your feedback on the product and API.
+
+Feel free to open an issue, a PR or send directly an email to [simone@redbeardlab.com](mailto:simone@redbeardlab.com)
+
+If you want to contribute to the code, feel free to run the tests.
+
+A dummy user with a dummy token is present in the tests, it can be used freely.
 
 [simplesql]: https://simplesql.redbeardlab.com
 [swagger]: https://app.swaggerhub.com/apis-docs/redbeardlab/simplesql.redbeardlab.com/0.1.1
+[subscribe]: https://landing.mailerlite.com/webforms/landing/d5m9d6
+
