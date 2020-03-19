@@ -1,6 +1,6 @@
 {
   "name": "@redbeardlab/simplesql",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An SDK for SimpleSQL.redbeardlab.com",
   "main": "index.js",
   "directories": {
