@@ -1,6 +1,6 @@
 {
   "name": "@redbeardlab/simplesql",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "An SDK for SimpleSQL.redbeardlab.com",
   "main": "dist/bundle.min.js",
   "directories": {
