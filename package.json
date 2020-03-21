@@ -1,8 +1,8 @@
 {
   "name": "@redbeardlab/simplesql",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "An SDK for SimpleSQL.redbeardlab.com",
-  "main": "index.js",
+  "main": "dist/bundle.min.js",
   "directories": {
     "test": "test"
   },
@@ -11,6 +11,7 @@
     "axios": "^0.19.2"
   },
   "devDependencies": {
+    "browserify": "^16.5.0",
     "jest": "^25.1.0",
     "typescript": "^3.8.3",
     "uglify-js": "^3.8.0"
@@ -18,8 +19,9 @@
   "scripts": {
     "test": "jest --env=node",
     "compile": "tsc",
-    "minify": "uglifyjs dist/simplesql.js --output dist/simplesql.min.js",
-    "build": "npm run compile && npm run minify"
+    "browserify": "browserify dist/simplesql.js -o dist/bundle.js",
+    "minify": "uglifyjs dist/bundle.js --output dist/bundle.min.js && uglifyjs dist/simplesql.js -o dist/simplesql.min.js",
+    "build": "npm run compile && npm run browserify && npm run minify"
   },
   "author": "",
   "license": "ISC"
