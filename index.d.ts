@@ -16,8 +16,11 @@ export as namespace SimpleSQL;
 
 /*~ If this module has methods, declare them as functions like so.
  */
-export function newDatabase(token?: string): string;
-export function execute(database: string, command: string, token?: string): number;
+export function newDatabase(token?: string): Promise<string>;
+export function command(database: string, command: string, token?: string): Promise<Object>;
+export function listDatabases(token: string): Promise<[string]>;
+export function newToken(token: string): Promise<string>;
+export function listTokens(token: string): Promise<[string]>;
 
 /*~ You can declare types that are available via importing the module */
 

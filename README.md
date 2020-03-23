@@ -28,7 +28,7 @@ On server environments `npm i @redbearlab/simplesql`.
 On browsers:
 
 ```html
-<script type="text/javascript" src="https://unpkg.com/@redbeardlab/simplesql@>=1.0.7"></script>
+<script type="text/javascript" src="https://unpkg.com/@redbeardlab/simplesql@>=1.0.8"></script>
 ```
 
 In the browser environment is necessary to set the CORS headers to use the authentication/private databases.

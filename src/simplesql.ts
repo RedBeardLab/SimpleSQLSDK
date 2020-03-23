@@ -4,13 +4,6 @@ export const baseUrl = 'https://simplesql.redbeardlab.com';
 const axios = require('axios').default;
 export const apiUrl = `${baseUrl}/v0/api`;
 
-class Auth {
-    Authentication?: string;
-    constructor(token?: string) {
-	this.Authentication = `Bearer ${token}`;
-   }
-}
-
 function generateAuth(token?: string): Object {
     if (token) {
 	return {'Authorization': `Bearer ${token}`};
