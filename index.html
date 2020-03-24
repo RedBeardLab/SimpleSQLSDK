@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script type="text/javascript" src="https://unpkg.com/@redbeardlab/simplesql@>=1.0.8"></script>
+  </head>
+  <body>
+    <h1> TODO App </h1>
+    <div>
+      <h2>1. Import the SKD </h2>
+      <pre><code>&lt;script type="text/javascript" src="https://unpkg.com/@redbeardlab/simplesql@>=1.0.8">&lt;/script></code></pre>
+    </div>
+    <div>
+      <h2>2. Create a new database </h2>
+      <pre><code>const new_database = await SimpleSQL.newDatabase();</code></pre>
+      <button onclick="createNewDatabase()"> Create a new database </button>
+      <div id="feedback_2"></div>
+    </div>
+    <div>
+      <h2>3. Create the table </h2>
+      <pre><code>const done = await SimpleSQL.command(new_database, "CREATE TABLE todo(item TEXT, done INT);");</code></pre>
+      <button onclick="createTable()"> Create table </button>
+      <div id="feedback_3"></div>
+    </div>
+    <div>
+      <h2>4. Insert elements </h2>
+      <pre><code>const done = await SimpleSQL.command(new_database, "INSERT INTO todo VALUES('buy the milk', 0);");</code></pre>
+      <select id="to_insert_select">
+	<option value="1">'buy the milk'</option>
+	<option value="2">'go running'</option>
+	<option value="3">'walk the dog'</option>
+      </select>
+      <button onclick="insertElement()"> Insert </button>
+      <div id="feedback_4"></div>
+    </div>
+    <div style="padding-top=2rem;">
+    <table id="list" style="border: 1px solid black; border-collapse: collapse;"></table>
+    </div>
+    <script>
+      var db = "";
+      var table_created = false;
+      
+      async function createNewDatabase() {
+	db = await SimpleSQL.newDatabase();
+	document.getElementById('feedback_2').innerHTML = 'Created new database with ID: ' + db;
+      };
+      
+      async function createTable() {
+	if (db == "") {
+	  document.getElementById('feedback_3').innerHTML = 'First you need to create a new database';
+	  return;
+	}
+	try {
+	  await SimpleSQL.command(db, 'CREATE TABLE todo(item TEXT, done INT);');
+	  document.getElementById('feedback_3').innerHTML = 'Table created!';
+	  table_created = true;
+	  renderTable();
+	} catch (e) {
+	  document.getElementById('feedback_3').innerHTML = 'Error in creating the table: ' + e;
+	}
+      };
+      
+      async function insertElement() {
+	if (!table_created) {
+	  document.getElementById('feedback_4').innerHTML = 'First you need to create the table';
+	  return;
+	}
+	var to_insert = document.getElementById('to_insert_select').value;
+	const options = {
+	  '1': "INSERT INTO todo VALUES('buy the milk', 0);",
+	  '2': "INSERT INTO todo VALUES('go running', 0);",
+	  '3': "INSERT INTO todo VALUES('walk the dog', 0);"
+	};
+	query = options[to_insert];
+	try {
+	  await SimpleSQL.command(db, query);
+	  document.getElementById('feedback_4').innerHTML = 'Inserted!';
+	  renderTable();
+	} catch (e) {
+	  document.getElementById('feedback_4').innerHTML = 'Error in inserting the element: ' + e;
+	}
+      };
+
+      function createRemoveItem(id) {
+	let f = async function (_e) {
+	  let cmd = "DELETE FROM todo WHERE oid = " + id + ";";
+	  console.log(cmd);
+	  await SimpleSQL.command(db, cmd);
+	  console.log('DONE');
+	  renderTable();
+	};
+	return f;
+      }
+
+      async function renderTable() {
+	if (!table_created) {
+	  return;
+	}
+	let result = await SimpleSQL.command(db, "SELECT oid, item, done FROM todo;");
+	let t = document.getElementById('list');
+	t.innerHTML = "";
+	var header = t.createTHead();
+	var hrow = header.insertRow(0);
+	hrow.insertCell(0).innerHTML = "I did it!";
+	hrow.insertCell(1).innerHTML = "Item to do";
+	console.log(result);
+	for (rows in result['values']) {
+	  oid = result['values'][rows][0];
+	  var row = t.insertRow(-1);
+	  var doneButton = row.insertCell(0);
+	  var btn = document.createElement("button");
+	  btn.innerHTML = "DONE";
+	  btn.onclick = createRemoveItem(oid);
+	  doneButton.appendChild(btn);
+	  doneButton.style = "border: 1px solid black;"
+	  var item = row.insertCell(1);
+	  item.style = "border: 1px solid black;"
+	  item.innerHTML =  result['values'][rows][1];
+	}
+      }
+
+    </script>
+  </body>
+</html>
