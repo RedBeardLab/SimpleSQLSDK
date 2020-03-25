@@ -1,10 +1,32 @@
 <html>
   <head>
     <meta charset="utf-8"/>
+    <title>SimpleSQL SDK for disposbale HTTP accessible databases</title>
     <script type="text/javascript" src="https://unpkg.com/@redbeardlab/simplesql@>=1.0.8"></script>
   </head>
   <body>
-    <h1> TODO App </h1>
+    <h1> TODO App with SimpleSQL </h1>
+    <div>
+      <h2> Intro </h2>
+	<p> <a href="https://simplesql.redbeardlab.com/">SimpleSQL</a> is an API that allow to interact with disposable databases using HTTP calls. </p>
+      	<p> We provide a small Javascript SDK to simplify developement of static web sites. </p>
+      	<p> The main documentation of the SDK is the <a href="https://github.com/RedBeardLab/SimpleSQLSDK">github page</a>. </p>
+      	<p> The REST API is <a href="https://app.swaggerhub.com/apis-docs/redbeardlab/simplesql.redbeardlab.com/">documented on swagger</a>, that also allow to test the API live. </p>
+      <h2> What I am looking at </h2>
+      	<p> This page is a completely static page made of HTML and JS (not even CSS), that implements a simple TODO app using SimpleSQL. </p>
+      	<p> There is not a backend but we only use the SimpleSQL API. Directly from the frontend we can create databases and interact with them, executing whatever SQL command we want. </p>
+      <h2> An overview </h2>
+	<p> SimpleSQL rotate around the concept of database, with a simple call you can create a new database and the API will give you back the ID of the database. You need the ID to access the database.</p>
+	<p> Once you get the database, you can do whatever you want with it. Create table, insert values, delete values or tables. The databases, of course, keep their state. </P>
+	<p> Authentication is provided with the use of tokens, but for this I suggest to refer to the documentation. </p>
+      <h2> The TODO App </h2>
+	<p> The TODO app is an execuse to test and use the API, it quickly guide you on a standard workflow with SimpleSQL. </p>
+	<p> The first step one a frontend app will be to import the SDK, and this page already does so. </p>
+	<p> Then the user need to access one database, it can create a new one (like in this case), read the ID of the database from a cookie or from local storage, or even read the ID from a central database.  </p>
+	<p> The last step is to interact with the database, and this can be done using standard SQL commands and queries. The SQL dialect is SQLite. </p>
+	<br>
+	<p> The following steps guide you through it. Of course it is a limited example, but you can build very complex static page on top of this. </p>
+    </div>
     <div>
       <h2>1. Import the SKD </h2>
       <pre><code>&lt;script type="text/javascript" src="https://unpkg.com/@redbeardlab/simplesql@>=1.0.8">&lt;/script></code></pre>

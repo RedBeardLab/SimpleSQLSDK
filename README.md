@@ -11,6 +11,8 @@ Don't worry it is free!
 
 User without authentication can create and work only with public databases, for private databases is necessary to register and then the user will have access to authentication tokens.
 
+A simple TODO app implemented with SimpleSQL is available [following this link](https://redisql.redbeardlab.com/SimpleSQLSDK/) while the source is in the `index.html` file.
+
 ## Subscribe to the mail list
 
 SimpleSQL is a growing project, you can [subscribe to updates here.][subscribe]
