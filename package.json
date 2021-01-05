@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@types/node": "^13.9.1",
-    "axios": "^0.19.2"
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "browserify": "^16.5.0",
